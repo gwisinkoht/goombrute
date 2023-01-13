@@ -49,6 +49,10 @@ source = "922 346"
 
 output_dir = "GoomBruteOutput"
 
+clear_ext = "1213 93"
+
+all_data = "988 191"
+
 
 def add_noise():
     return randrange(0, 15)/10
@@ -107,6 +111,10 @@ for user in usernames:
 
     # Add a delay
     commands.append(f"sleep {delay}")
+    
+    commands.append(f"xdotool mousemove {clear_ext} click 1")
+    commands.append(f"sleep {add_noise()}")
+    commands.append(f"xdotool mousemove {all_data} click 1")
     
 # Process raw output into a readable, exportable results file
 process_output = []
