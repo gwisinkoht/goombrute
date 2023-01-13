@@ -101,7 +101,7 @@ for user in usernames:
     commands.append(f"xdotool mousemove {blank} click 1 key ctrl+a")
     
     name = user.split("@")[1]
-    commands.append(f"xclip -o > {output_dir}/{name}.txt")
+    commands.append(f"xclip -o > \"{output_dir}/{name}.txt\"")
 
     # Add a delay
     commands.append(f"sleep {delay}")
