@@ -46,6 +46,8 @@ blank = "713 182"
 
 source = "922 346"
 
+output_dir = "GoomBruteOutput"
+
 
 def add_noise():
     return randrange(0, 15)/10
@@ -99,17 +101,20 @@ for user in usernames:
     
     # Save page results
     commands.append(f"xdotool mousemove {blank} click 1 key ctrl+a")
-    commands.append(f"xclip -o > GoomBruteOutput/raw-output{count}.txt")
+    commands.append(f"xclip -o > {output_dir}/raw-output{count}.txt")
 
     # Add a delay
     commands.append(f"sleep {delay}")
+    
+    
+
 
 
 print(f"Writing to '{target_filename}'...\n")
 with open(target_filename, 'w') as output_file:
     print('#!/bin/bash')
     output_file.write("#!/bin/bash\n")
-    output_file.write("mkdir GoomBruteOutput\n")
+    output_file.write("mkdir {output_dir}\n")
     for line in commands:
         print(line)
         output_file.write(line)
