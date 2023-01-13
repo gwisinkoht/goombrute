@@ -110,16 +110,14 @@ for user in usernames:
 process_output = []
 process_output.append(f"for file in `ls {output_dir}`; do")
 process_output.append(f"result=`cat {output_dir}/$file | grep -i 'Wrong password. Try again' | wc -c")
-process_output.append("if [ $result -eq 0 ]; then; echo `\"$file\" Success :D`; else; echo `\"$file\" Wrong Password :('")
-
-
+process_output.append("if [ $result -eq 0 ]; then; echo \"$file Success :D\"; else; echo \"$file Wrong Password :(\"")
 
 
 print(f"Writing to '{target_filename}'...\n")
 with open(target_filename, 'w') as output_file:
     print('#!/bin/bash')
     output_file.write("#!/bin/bash\n")
-    output_file.write("mkdir {output_dir}\n")
+    output_file.write(f"mkdir {output_dir}\n")
     for line in commands:
         print(line)
         output_file.write(line)
