@@ -22,6 +22,7 @@ path = Path("password.txt")
 if path.is_file() and _DEV_ == True:
     with open("password.txt",'r') as pass_file:
         password = pass_file.readline()
+        password = "".join(password.split())
         
 
 
@@ -109,9 +110,15 @@ for user in usernames:
     
 # Process raw output into a readable, exportable results file
 process_output = []
-process_output.append(f"for file in `ls {output_dir}`; do")
+process_output.append(f"for file in `ls {output_dir}`")
+process_output.append("do")
 process_output.append(f"result=`cat {output_dir}/$file | grep -i 'Wrong password. Try again' | wc -c`")
-process_output.append("if [ $result -eq 0 ]; then; echo \"$file Success :D\"; else; echo \"$file Wrong Password :(\"; fi")
+process_output.append("if [ $result -eq 0 ]")
+process_output.append("then")
+process_output.append("echo \"$file Success :D\"")
+process_output.append("else")
+process_output.append("echo \"$file Wrong Password :(\"")
+process_output.append("fi")
 process_output.append("done")
 
 print(f"Writing to '{target_filename}'...\n")
