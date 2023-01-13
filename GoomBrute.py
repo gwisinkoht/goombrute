@@ -113,7 +113,7 @@ for user in usernames:
     commands.append(f"sleep {delay}")
     
     commands.append(f"xdotool mousemove {clear_ext} click 1")
-    commands.append(f"sleep {add_noise()}")
+    commands.append(f"sleep {wait_load}")
     commands.append(f"xdotool mousemove {all_data} click 1")
     
 # Process raw output into a readable, exportable results file
