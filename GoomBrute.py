@@ -112,7 +112,7 @@ process_output = []
 process_output.append(f"for file in `ls {output_dir}`; do")
 process_output.append(f"result=`cat {output_dir}/$file | grep -i 'Wrong password. Try again' | wc -c`")
 process_output.append("if [ $result -eq 0 ]; then; echo \"$file Success :D\"; else; echo \"$file Wrong Password :(\"; fi")
-
+process_output.append("done")
 
 print(f"Writing to '{target_filename}'...\n")
 with open(target_filename, 'w') as output_file:
