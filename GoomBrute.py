@@ -10,8 +10,8 @@
 
 _DEV_ = True
 
-from random import randrange
-from pathlib import Path
+from random import randrange # to generate noise
+from pathlib import Path # to handle files
 
 # OPTIONS
 user_list = "users.txt"
@@ -53,16 +53,18 @@ clear_ext = "1213 93"
 
 all_data = "988 191"
 
-
+# Generates a value for creating noise between request delays.
+# This is a function instead of a variable so that a new random
+# is generated upon each call.
 def add_noise():
     return randrange(0, 15)/10
 
+# Sets the request delay.
 def wait_load():
     return 3
 
 
 # Load the usernames from file into a list.
-
 print(f"Loading username file '{user_list}'...")
 usernames = []
 with open(user_list, "r") as user_file:
@@ -120,6 +122,8 @@ for user in usernames:
 process_output = []
 process_output.append(f"for file in `ls {output_dir}`")
 process_output.append("do")
+
+# Check whether a wrong password was submitted.
 process_output.append(f"result=`cat {output_dir}/$file | grep -i 'Wrong password. Try again' | wc -c`")
 process_output.append("if [ $result -eq 0 ]")
 process_output.append("then")
@@ -129,6 +133,7 @@ process_output.append("echo \"$file Wrong Password :(\"")
 process_output.append("fi")
 process_output.append("done")
 
+# Write the executable bash script.
 print(f"Writing to '{target_filename}'...\n")
 with open(target_filename, 'w') as output_file:
     print('#!/bin/bash')
