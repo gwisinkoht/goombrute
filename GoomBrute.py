@@ -147,11 +147,12 @@ for user in usernames:
     commands.append("if [ $success = true ]")
     commands.append("then")
     commands.append(f"echo \"{user} Success\" >> {output_dir}/results.txt")
+    commands.append(f"cat {output_dir}/results.txt")
     commands.append("exit")
     commands.append("else")
     commands.append(f"echo \"{user} Failure\" >> {output_dir}/results.txt")
     commands.append("fi")
-    
+        
 
 # Write the executable bash script.
 print(f"Writing to '{target_filename}'...\n")
@@ -163,3 +164,4 @@ with open(target_filename, 'w') as output_file:
         print(line)
         output_file.write(line)
         output_file.write('\n')
+    output_file.write(f"cat {output_dir}/results.txt")
