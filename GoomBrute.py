@@ -146,7 +146,7 @@ for user in usernames:
     
     commands.append("if [ $success = true ]")
     commands.append("then")
-    commands.append(f"echo \"{user} Success {password}\" >> {output_dir}/results.txt")
+    commands.append(f"echo \"{user} Success\" >> {output_dir}/results.txt")
     commands.append("exit")
     commands.append("else")
     commands.append(f"echo \"{user} Failure\" >> {output_dir}/results.txt")
