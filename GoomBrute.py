@@ -152,12 +152,6 @@ for user in usernames:
     commands.append(f"echo \"{user} Failure\" >> {output_dir}/results.txt")
     commands.append("fi")
     
-# Process raw output into a readable, exportable results file
-process_output = []
-process_output.append(f"for file in `ls {output_dir}`")
-process_output.append("do")
-
-
 
 # Write the executable bash script.
 print(f"Writing to '{target_filename}'...\n")
@@ -169,9 +163,3 @@ with open(target_filename, 'w') as output_file:
         print(line)
         output_file.write(line)
         output_file.write('\n')
-        
-    for line in process_output:
-        print(line)
-        output_file.write(line)
-        output_file.write('\n')
-
