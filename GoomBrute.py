@@ -12,18 +12,12 @@ _DEV_ = True
 
 from random import randrange # to generate noise
 from pathlib import Path # to handle files
+import sys # to enable command line arguments
 
-# OPTIONS
-user_list = "users.txt"
-password = "PUT PASSWORD HERE"
-
-# For testing's sake:
-path = Path("password.txt")
-if path.is_file() and _DEV_ == True:
-    with open("password.txt",'r') as pass_file:
-        password = pass_file.readline()
-        password = "".join(password.split())
-        
+# Command line arguments
+target_url = sys.argv[1] # expects the target login url as a string
+password = sys.argv[2] # expects the password to spray as a string
+user_list = sys.argv[3] # expects path to a file
 
 
 target_filename = "xdobrute.sh"
