@@ -22,7 +22,6 @@ user_list = sys.argv[3] # expects path to a file
 
 target_filename = "xdobrute.sh"
 delay = 3 # seconds
-target_url = "gmail.com"
 
 # Browser search bar "x y"coordinates
 search = "1011 95"
