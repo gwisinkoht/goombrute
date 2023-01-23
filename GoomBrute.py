@@ -45,11 +45,7 @@ password_field = "820 454"
 # Blank area "x y" coordinates
 blank = "713 182"
 
-source = "922 346"
-
 output_dir = "GoomBruteOutput"
-
-clear_ext = "1213 93"
 
 all_data = "988 191"
 
